@@ -2,14 +2,18 @@ package com.projet.safety.safetynet.resources;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.safety.safetynet.services.FireStationService;
@@ -29,7 +33,7 @@ public class FireStationResource {
 		
 		Map<String, String> map = fireStationService.createFireStation(address, station);
 		
-		return new ResponseEntity<>(map, HttpStatus.OK);
+		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("")
@@ -51,6 +55,15 @@ public class FireStationResource {
 		Map<String, String> map = fireStationService.deleteFireStation(address);
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
-	} 
+	}
+	
+	@GetMapping("")
+	ResponseEntity<Map<String, Object>> getByFireStation(HttpServletRequest request,
+            @RequestParam("stationNumber") String station) {
+		
+		Map<String, Object> response = fireStationService.getPersonsByStation(station);
+		
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
 
 }

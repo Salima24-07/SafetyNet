@@ -1,6 +1,7 @@
 package com.projet.safety.safetynet.services;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,18 @@ public class FireStationServiceImpl implements FireStationService{
 		}
 		
 		return response;
+	}
+
+	@Override
+	public Map<String, Object> getPersonsByStation(String station) throws BadRequestException {
+
+		return fireStationRepository.getByStationNumber(station);
+	}
+
+	@Override
+	public Map<String, Object> getStationByAddress(String address) throws BadRequestException {
+		
+		return fireStationRepository.getStationNumberByAddress(address);
 	}
 
 }

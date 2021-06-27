@@ -29,12 +29,13 @@ public class MedicalRecordResource {
 		Map<String, String> map = medicalRecordService.createMedicalRecord(medicalRecord);
 		
 		
-		return new ResponseEntity<>(map, HttpStatus.OK);
+		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("")
 	public ResponseEntity<Map<String, String>> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
 		
+		System.out.println(medicalRecord.getFirstName());
 		
 		Map<String, String> map = medicalRecordService.updateMedicalRecord(medicalRecord);
 		

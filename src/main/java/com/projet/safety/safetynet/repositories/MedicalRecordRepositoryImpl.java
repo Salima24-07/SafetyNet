@@ -33,7 +33,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 				PreparedStatement ps = connection.
 						prepareStatement(SQL_CREATE);
 				Array medicationsArray = connection.createArrayOf("VARCHAR", medicalRecord.getMedications());
-				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllegries());
+				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllergies());
 				ps.setString(1, medicalRecord.getFirstName());
 				ps.setString(2, medicalRecord.getLastName());
 				ps.setDate(3, new Date(medicalRecord.getBirthdate().getTime()));
@@ -57,7 +57,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 				PreparedStatement ps = connection.
 						prepareStatement(SQL_UPDATE);
 				Array medicationsArray = connection.createArrayOf("VARCHAR", medicalRecord.getMedications());
-				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllegries());
+				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllergies());
 				ps.setDate(1, new Date(medicalRecord.getBirthdate().getTime()));
 				ps.setArray(2, medicationsArray);
 				ps.setArray(3, allergiesArray);

@@ -34,7 +34,7 @@ public class PersonResource {
 		
 		Map<String, String> map = personService.createPerson(firstName, lastName, adress, city, zip, phone, email);
 		
-		return new ResponseEntity<>(map, HttpStatus.OK);
+		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("")

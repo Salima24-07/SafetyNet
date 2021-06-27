@@ -10,14 +10,14 @@ public class MedicalRecord {
 	private String lastName;
 	private Date birthdate;
 	private String[] medications;
-	private String[] allegries;
+	private String[] allergies;
 	
-	public MedicalRecord(String firstName, String lastName, String birthdate, String[] medications, String[] allegries) throws ParseException {
+	public MedicalRecord(String firstName, String lastName, String birthdate, String[] medications, String[] allergies) throws ParseException {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate);
 		this.medications = medications;
-		this.allegries = allegries;
+		this.allergies = allergies;
 	}
 
 	public String getFirstName() {
@@ -52,12 +52,12 @@ public class MedicalRecord {
 		this.medications = medications;
 	}
 
-	public String[] getAllegries() {
-		return allegries;
+	public String[] getAllergies() {
+		return allergies;
 	}
 
-	public void setAllegries(String[] allegries) {
-		this.allegries = allegries;
+	public void setAllergies(String[] allergies) {
+		this.allergies = allergies;
 	}
 
 }
