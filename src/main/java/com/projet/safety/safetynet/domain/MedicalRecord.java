@@ -36,8 +36,8 @@ public class MedicalRecord {
 		this.lastName = lastName;
 	}
 
-	public Date getBirthdate() {
-		return birthdate;
+	public String getBirthdate() {
+		return new SimpleDateFormat("dd/MM/yyyy").format(birthdate);
 	}
 
 	public void setBirthDate(String birthdate) throws ParseException {

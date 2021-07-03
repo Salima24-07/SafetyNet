@@ -26,13 +26,13 @@ public class PersonResource {
 		
 		String firstName = (String) personMap.get("firstName");
 		String lastName = (String) personMap.get("lastName");
-		String adress = (String) personMap.get("address");
+		String address = (String) personMap.get("address");
 		String city = (String) personMap.get("city");
 		String zip = (String) personMap.get("zip");
 		String phone = (String) personMap.get("phone");
 		String email= (String) personMap.get("email");
 		
-		Map<String, String> map = personService.createPerson(firstName, lastName, adress, city, zip, phone, email);
+		Map<String, String> map = personService.createPerson(firstName, lastName, address, city, zip, phone, email);
 		
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
@@ -42,13 +42,13 @@ public class PersonResource {
 		
 		String firstName = (String) personMap.get("firstName");
 		String lastName = (String) personMap.get("lastName");
-		String adress = (String) personMap.get("address");
+		String address = (String) personMap.get("address");
 		String city = (String) personMap.get("city");
 		String zip = (String) personMap.get("zip");
 		String phone = (String) personMap.get("phone");
 		String email= (String) personMap.get("email");
 		
-		Map<String, String> map = personService.updatePerson(firstName, lastName, adress, city, zip, phone, email);
+		Map<String, String> map = personService.updatePerson(firstName, lastName, address, city, zip, phone, email);
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	} 

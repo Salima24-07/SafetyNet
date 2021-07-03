@@ -81,7 +81,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 						prepareStatement(SQL_CREATE, Statement.RETURN_GENERATED_KEYS);
 				ps.setString(1, person.getFirstName());
 				ps.setString(2, person.getLastName());
-				ps.setString(3, person.getAdress());
+				ps.setString(3, person.getAddress());
 				ps.setString(4, person.getCity());
 				ps.setString(5, person.getZip());
 				ps.setString(6, person.getPhone());
@@ -111,7 +111,7 @@ public class PersonRepositoryImpl implements PersonRepository {
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
 						prepareStatement(SQL_UPDATE);
-				ps.setString(1, person.getAdress());
+				ps.setString(1, person.getAddress());
 				ps.setString(2, person.getCity());
 				ps.setString(3, person.getZip());
 				ps.setString(4, person.getPhone());

@@ -3,6 +3,8 @@ package com.projet.safety.safetynet.repositories;
 import java.sql.Array;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -36,7 +38,11 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllergies());
 				ps.setString(1, medicalRecord.getFirstName());
 				ps.setString(2, medicalRecord.getLastName());
-				ps.setDate(3, new Date(medicalRecord.getBirthdate().getTime()));
+				try {
+					ps.setDate(3, new Date(new SimpleDateFormat("dd/MM/yyyy").parse(medicalRecord.getBirthdate()).getTime()));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				ps.setArray(4, medicationsArray);
 				ps.setArray(5, allergiesArray);
 				return ps;
@@ -58,7 +64,11 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 						prepareStatement(SQL_UPDATE);
 				Array medicationsArray = connection.createArrayOf("VARCHAR", medicalRecord.getMedications());
 				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllergies());
-				ps.setDate(1, new Date(medicalRecord.getBirthdate().getTime()));
+				try {
+					ps.setDate(1, new Date(new SimpleDateFormat("dd/MM/yyyy").parse(medicalRecord.getBirthdate()).getTime()));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 				ps.setArray(2, medicationsArray);
 				ps.setArray(3, allergiesArray);
 				ps.setString(4, medicalRecord.getFirstName());
@@ -69,6 +79,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 			return true;
 			
 		} catch (Exception e) {
+			System.err.println(e);
 			throw new BadRequestException("Invalid details. Failed to update medicalrecord");
 		}
 	}

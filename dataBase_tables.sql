@@ -1,12 +1,12 @@
 create table person (
-	firstName varchar(25) not null,
-	lastName varchar(25) not null,
+	first_name varchar(25) not null,
+	last_name varchar(25) not null,
 	address varchar(250) not null,
 	city varchar(25) not null,
-	zip varchar(4) not null,
+	zip varchar(5) not null,
 	phone varchar(12) not null,
 	email varchar(100) not null,
-	unique(firstName, lastName)
+	unique(first_name, last_name)
 	);
 
 create table firestation (
@@ -16,10 +16,10 @@ create table firestation (
     );
 	
 create table medicalrecord (
-    firstName varchar(25) not null,
-	lastName varchar(25) not null,
+    first_name varchar(25) not null,
+	last_name varchar(25) not null,
 	birthdate date not null,
 	medications varchar(50)[] not null,
 	allergies varchar(50)[] not null,
-	unique(firstName, lastName)
+	unique(first_name, last_name)
 	);
