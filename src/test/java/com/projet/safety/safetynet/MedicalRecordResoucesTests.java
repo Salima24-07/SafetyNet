@@ -26,7 +26,7 @@ class MedicalRecordResourcesTests {
 	public void testCreateMedicalRecord() throws Exception {
 		String url = "/medicalrecord";
 		
-		MedicalRecord MedicalRecord = new MedicalRecord("John", "Boyd", "03/06/1984", new String[]{"aznol:350mg", "hydrapermazol:100mg"}, new String[]{"nillacilan"});
+		MedicalRecord MedicalRecord = new MedicalRecord("test", "test", "03/06/1984", new String[]{"aznol:350mg", "hydrapermazol:100mg"}, new String[]{"nillacilan"});
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -42,7 +42,7 @@ class MedicalRecordResourcesTests {
 	public void testUpdateMedicalRecord() throws Exception {
 		String url = "/medicalrecord";
 		
-		MedicalRecord MedicalRecord = new MedicalRecord("John", "Boyd", "03/06/1984", new String[]{"aznol:350mg", "hydrapermazol:100mg"}, new String[]{"nillacilan"});
+		MedicalRecord MedicalRecord = new MedicalRecord("test", "test", "03/06/1984", new String[]{"aznol:350mg", "hydrapermazol:100mg"}, new String[]{"nillacilan"});
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -58,7 +58,7 @@ class MedicalRecordResourcesTests {
 	public void testDeleteMedicalRecord() throws Exception {
 		String url = "/medicalrecord";
 		
-		MedicalRecord MedicalRecord = new MedicalRecord("John", "Boyd", "03/06/1984", new String[]{"aznol:350mg", "hydrapermazol:100mg"}, new String[]{"nillacilan"});
+		MedicalRecord MedicalRecord = new MedicalRecord("test", "test", "03/06/1984", new String[]{"aznol:350mg", "hydrapermazol:100mg"}, new String[]{"nillacilan"});
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);

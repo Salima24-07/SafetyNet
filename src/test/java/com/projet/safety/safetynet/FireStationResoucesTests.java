@@ -26,7 +26,7 @@ class FireStationResourcesTests {
 	public void testCreateFireStation() throws Exception {
 		String url = "/firestation";
 		
-		FireStation fireStation = new FireStation("1509 Culver St", "3");
+		FireStation fireStation = new FireStation("test", "3");
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -42,7 +42,7 @@ class FireStationResourcesTests {
 	public void testUpdateFireStation() throws Exception {
 		String url = "/firestation";
 		
-		FireStation fireStation = new FireStation("1509 Culver St", "3");
+		FireStation fireStation = new FireStation("test", "3");
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -58,7 +58,7 @@ class FireStationResourcesTests {
 	public void testDeleteFireStation() throws Exception {
 		String url = "/firestation";
 		
-		FireStation fireStation = new FireStation("1509 Culver St", "3");
+		FireStation fireStation = new FireStation("test", "3");
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);

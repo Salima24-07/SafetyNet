@@ -72,7 +72,7 @@ public class SafetyResource {
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	@GetMapping("/flood")
+	@GetMapping("/flood/stations")
 	public ResponseEntity<Map<String, Object>> getStationsInfo(HttpServletRequest request,
             @RequestParam("stations") String[] stations){
 		
