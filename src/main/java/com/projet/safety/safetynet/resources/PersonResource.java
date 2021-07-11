@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projet.safety.safetynet.domain.Person;
 import com.projet.safety.safetynet.services.PersonService;
 
 @RestController
@@ -22,33 +23,17 @@ public class PersonResource {
 	PersonService personService;
 	
 	@PostMapping("")
-	public ResponseEntity<Map<String, String>> registerPerson(@RequestBody Map<String, Object> personMap) {
+	public ResponseEntity<Map<String, String>> registerPerson(@RequestBody Person person) {
 		
-		String firstName = (String) personMap.get("firstName");
-		String lastName = (String) personMap.get("lastName");
-		String address = (String) personMap.get("address");
-		String city = (String) personMap.get("city");
-		String zip = (String) personMap.get("zip");
-		String phone = (String) personMap.get("phone");
-		String email= (String) personMap.get("email");
-		
-		Map<String, String> map = personService.createPerson(firstName, lastName, address, city, zip, phone, email);
+		Map<String, String> map = personService.createPerson(person);
 		
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("")
-	ResponseEntity<Map<String, String>> updatePerson(@RequestBody Map<String, Object> personMap) {
+	ResponseEntity<Map<String, String>> updatePerson(@RequestBody Person person) {
 		
-		String firstName = (String) personMap.get("firstName");
-		String lastName = (String) personMap.get("lastName");
-		String address = (String) personMap.get("address");
-		String city = (String) personMap.get("city");
-		String zip = (String) personMap.get("zip");
-		String phone = (String) personMap.get("phone");
-		String email= (String) personMap.get("email");
-		
-		Map<String, String> map = personService.updatePerson(firstName, lastName, address, city, zip, phone, email);
+		Map<String, String> map = personService.updatePerson(person);
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	} 

@@ -1,13 +1,30 @@
 package com.projet.safety.safetynet.domain;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name="person")
 public class Person {
 	
+	@Column(name="first_name")
 	private String firstName;
+	
+	@Column(name="last_name")
 	private String lastName;
+	
+	@Column(name="address")
 	private String address;
+	
+	@Column(name="city")
 	private String city;
+	
+	@Column(name="zip")
 	private String zip;
+	
+	@Column(name="phone")
 	private String phone;
+	
+	@Column(name="email")
 	private String email;
 	
 	public Person(String firstName, String lastName, String adress, String city, String zip, String phone,
@@ -20,7 +37,7 @@ public class Person {
 		this.phone = phone;
 		this.email = email;
 	}
-
+	
 	public String getFirstName() {
 		return firstName;
 	}

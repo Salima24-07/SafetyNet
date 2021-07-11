@@ -20,19 +20,13 @@ public class PersonServiceImpl implements PersonService {
 	PersonRepository personRepository;
 
 	@Override
-	public Map<String, String> createPerson(String firstName, String lastName, String adress, String city, String zip,
-			String phone, String email) throws BadRequestException {
-		
-		Person person = new Person(firstName, lastName, adress, city, zip, phone, email);
+	public Map<String, String> createPerson(Person person) throws BadRequestException {
 		
 		return personRepository.create(person);
 	}
 
 	@Override
-	public Map<String, String> updatePerson(String firstName, String lastName, String adress, String city, String zip,
-			String phone, String email) throws BadRequestException {
-		
-		Person person = new Person(firstName, lastName, adress, city, zip, phone, email);
+	public Map<String, String> updatePerson(Person person) throws BadRequestException {
 		
 		Map<String, String> response = new HashMap<String, String>();
 		
