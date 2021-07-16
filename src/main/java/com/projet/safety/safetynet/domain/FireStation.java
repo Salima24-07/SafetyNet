@@ -1,8 +1,18 @@
 package com.projet.safety.safetynet.domain;
 
+@Entity
+@Table(name="firestation")
 public class FireStation {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
+	private int Id;
 	
+	@Column(name="address")
 	private String address;
+
+	@Column(name="station")
 	private String station;
 	
 	public FireStation(String address, String station) {

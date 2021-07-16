@@ -4,12 +4,28 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Entity
+@Table(name="medicalrecord")
 public class MedicalRecord {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name="id")
+	private int Id;
+
+	@Column(name="first_name")
 	private String firstName;
+	
+	@Column(name="last_name")
 	private String lastName;
+
+	@Column(name="birthdate")
 	private Date birthdate;
+
+	@Column(name="medications")
 	private String[] medications;
+
+	@Column(name="allergies")
 	private String[] allergies;
 	
 	public MedicalRecord(String firstName, String lastName, String birthdate, String[] medications, String[] allergies) throws ParseException {
