@@ -10,9 +10,9 @@ public interface PersonRepository {
 	
 	Map<String, String> create(Person person) throws BadRequestException;
 	
-	Boolean update(Person person) throws BadRequestException;
+	Map<String, String> update(Person person) throws BadRequestException;
 	
-	Boolean delete(String firstName, String lastName) throws BadRequestException;
+	Map<String, String> delete(String firstName, String lastName) throws BadRequestException;
 	
 	List<String> getEmailsByCity(String city) throws BadRequestException;
 	

@@ -12,17 +12,10 @@ import org.springframework.stereotype.Repository;
 
 import com.projet.safety.safetynet.domain.MedicalRecord;
 import com.projet.safety.safetynet.exceptions.BadRequestException;
+import com.projet.safety.safetynet.database_queries.MedicalRecordQueries;
 
 @Repository
 public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
-	
-	private static final String SQL_CREATE = "INSERT INTO MEDICALRECORD(FIRST_NAME, LAST_NAME, BIRTHDATE, "
-			+"MEDICATIONS, ALLERGIES) VALUES (?, ?, ?, ?, ?)";
-	
-	private static final String SQL_UPDATE = "UPDATE MEDICALRECORD SET BIRTHDATE = ?, MEDICATIONS = ?,"
-			+"ALLERGIES = ? WHERE FIRST_NAME = ? AND LAST_NAME = ?";
-	
-	private static final String SQL_DELETE = "DELETE FROM MEDICALRECORD WHERE FIRST_NAME = ? AND LAST_NAME = ?";
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -33,7 +26,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 			
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
-						prepareStatement(SQL_CREATE);
+						prepareStatement(MedicalRecordQueries.SQL_CREATE);
 				Array medicationsArray = connection.createArrayOf("VARCHAR", medicalRecord.getMedications());
 				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllergies());
 				ps.setString(1, medicalRecord.getFirstName());
@@ -61,7 +54,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 			
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
-						prepareStatement(SQL_UPDATE);
+						prepareStatement(MedicalRecordQueries.SQL_UPDATE);
 				Array medicationsArray = connection.createArrayOf("VARCHAR", medicalRecord.getMedications());
 				Array allergiesArray = connection.createArrayOf("VARCHAR", medicalRecord.getAllergies());
 				try {
@@ -90,7 +83,7 @@ public class MedicalRecordRepositoryImpl implements MedicalRecordRepository{
 			
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
-						prepareStatement(SQL_DELETE);
+						prepareStatement(MedicalRecordQueries.SQL_DELETE);
 				ps.setString(1, firstName);
 				ps.setString(2, lastName);
 				return ps;

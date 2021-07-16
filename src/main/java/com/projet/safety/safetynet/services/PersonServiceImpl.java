@@ -28,29 +28,13 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public Map<String, String> updatePerson(Person person) throws BadRequestException {
 		
-		Map<String, String> response = new HashMap<String, String>();
-		
-		if (personRepository.update(person)) {
-			response.put("message", "Person updated successfully");
-		} else {
-			throw new BadRequestException("Failed to update person");
-		};
-		
-		return response;
+		return personRepository.update(person);
 	}
 
 	@Override
 	public Map<String, String> deletePerson(String firstName, String lastName) throws BadRequestException {
 		
-		Map<String, String> response = new HashMap<String, String>();
-		
-		if (personRepository.delete(firstName, lastName)) {
-			response.put("message", "Person deleted successfully");
-		} else {
-			throw new BadRequestException("Failed to delete person");
-		};
-		
-		return response;
+		return personRepository.delete(firstName, lastName);
 		
 	}
 

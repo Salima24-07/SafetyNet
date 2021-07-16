@@ -12,28 +12,10 @@ import org.springframework.stereotype.Repository;
 
 import com.projet.safety.safetynet.domain.FireStation;
 import com.projet.safety.safetynet.exceptions.BadRequestException;
+import com.projet.safety.safetynet.database_queries.FireStationQueries;
 
 @Repository
 public class FireStationRepositoryImpl implements FireStationRepository{
-
-	private static final String SQL_CREATE = "INSERT INTO FIRESTATION(ADDRESS, "
-			+"STATION) VALUES (?, ?)";
-	
-	private static final String SQL_UPDATE = "UPDATE FIRESTATION SET STATION = ? WHERE ADDRESS = ?";
-	
-	private static final String SQL_DELETE = "DELETE FROM FIRESTATION WHERE ADDRESS = ?";
-	
-	private static final String SQL_GET_BY_STATION_NUMBER = "SELECT P.FIRST_NAME, P.LAST_NAME, P.ADDRESS, "
-			+"P.PHONE FROM PERSON P INNER JOIN FIRESTATION FS ON FS.ADDRESS = P.ADDRESS "
-			+ "WHERE FS.STATION = ?";
-	
-	private static final String SQL_COUNT_ADULTS_CHILDREN = "SELECT SUM(CASE WHEN MR.BIRTHDATE < CURRENT_DATE - INTERVAL '18 YEAR' "
-			+ "THEN 1 ELSE 0 END) AS ADULTS, SUM(CASE WHEN MR.BIRTHDATE < CURRENT_DATE - INTERVAL '18 YEAR' "
-			+ "THEN 0 ELSE 1 END) AS CHILDREN "
-			+ "FROM MEDICALRECORD MR INNER JOIN PERSON P ON P.FIRST_NAME = MR.FIRST_NAME AND P.LAST_NAME = MR.LAST_NAME "
-			+ "INNER JOIN FIRESTATION FS ON FS.ADDRESS = P.ADDRESS WHERE FS.STATION = ?";
-	
-	private static final String SQL_GET_STATION_NUMBER = "SELECT STATION FROM FIRESTATION WHERE ADDRESS = ?";
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
@@ -45,7 +27,7 @@ public class FireStationRepositoryImpl implements FireStationRepository{
 			
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
-						prepareStatement(SQL_CREATE);
+						prepareStatement(FireStationQueries.SQL_CREATE);
 				ps.setString(1, fireStation.getAddress());
 				ps.setString(2, fireStation.getStation());
 				return ps;
@@ -65,7 +47,7 @@ public class FireStationRepositoryImpl implements FireStationRepository{
 			
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
-						prepareStatement(SQL_UPDATE);
+						prepareStatement(FireStationQueries.SQL_UPDATE);
 				ps.setString(1, fireStation.getStation());
 				ps.setString(2, fireStation.getAddress());
 				return ps;
@@ -83,7 +65,7 @@ public class FireStationRepositoryImpl implements FireStationRepository{
 		try {
 			jdbcTemplate.update(connection -> {
 				PreparedStatement ps = connection.
-						prepareStatement(SQL_DELETE);
+						prepareStatement(FireStationQueries.SQL_DELETE);
 				ps.setString(1, address);
 				return ps;
 			});
@@ -98,9 +80,9 @@ public class FireStationRepositoryImpl implements FireStationRepository{
 	@Override
 	public Map<String, Object> getByStationNumber(String station) {
 		
-		List<Map<String, String>> persons =  jdbcTemplate.query(SQL_GET_BY_STATION_NUMBER, new Object[] {station}, personsMapper);
+		List<Map<String, String>> persons =  jdbcTemplate.query(FireStationQueries.SQL_GET_BY_STATION_NUMBER, personsMapper, station);
 		
-		Map<String, Object> response = jdbcTemplate.queryForMap(SQL_COUNT_ADULTS_CHILDREN, new Object[] {station});
+		Map<String, Object> response = jdbcTemplate.queryForMap(FireStationQueries.SQL_COUNT_ADULTS_CHILDREN, new Object[] {station});
 		
 		response.put("persons", persons);
 		
@@ -122,7 +104,7 @@ public class FireStationRepositoryImpl implements FireStationRepository{
 	@Override
 	public Map<String, Object> getStationNumberByAddress(String address) {
 		
-		return jdbcTemplate.queryForMap(SQL_GET_STATION_NUMBER, address);
+		return jdbcTemplate.queryForMap(FireStationQueries.SQL_GET_STATION_NUMBER, address);
 	}
 
 
