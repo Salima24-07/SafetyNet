@@ -1,6 +1,7 @@
 package com.projet.safety.safetynet.domain;
 
 import java.text.ParseException;
+import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

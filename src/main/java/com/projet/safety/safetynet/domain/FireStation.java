@@ -1,5 +1,7 @@
 package com.projet.safety.safetynet.domain;
 
+import javax.persistence.*;
+
 @Entity
 @Table(name="firestation")
 public class FireStation {
