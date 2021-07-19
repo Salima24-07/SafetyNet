@@ -3,16 +3,23 @@ package com.projet.safety.safetynet.domain;
 import java.text.ParseException;
 import javax.persistence.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 @Entity
-@Table(name="medicalrecord")
+@Table(
+	name="medicalrecord",
+	uniqueConstraints = {
+		@UniqueConstraint(name = "medical_record_unique", columnNames = {"first_name", "last_name"})
+	}
+	)
 public class MedicalRecord {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="id")
-	private int Id;
+	private Long Id;
 
 	@Column(name="first_name")
 	private String firstName;
@@ -21,20 +28,39 @@ public class MedicalRecord {
 	private String lastName;
 
 	@Column(name="birthdate")
-	private Date birthdate;
+	private LocalDate birthdate;
 
 	@Column(name="medications")
-	private String[] medications;
+	private ArrayList<String> medications;
 
 	@Column(name="allergies")
-	private String[] allergies;
+	private ArrayList<String> allergies;
+
+	public MedicalRecord() {}
 	
-	public MedicalRecord(String firstName, String lastName, String birthdate, String[] medications, String[] allergies) throws ParseException {
+	public MedicalRecord(Long id, String firstName, String lastName, LocalDate birthdate, ArrayList<String> medications, ArrayList<String> allergies) throws ParseException {
+		this.Id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate);
+		this.birthdate = birthdate;
 		this.medications = medications;
 		this.allergies = allergies;
+	}
+	
+	public MedicalRecord(String firstName, String lastName, LocalDate birthdate, ArrayList<String> medications, ArrayList<String> allergies) throws ParseException {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.birthdate = birthdate;
+		this.medications = medications;
+		this.allergies = allergies;
+	}
+
+	public Long getId() {
+		return Id;
+	}
+	
+	public void setId(Long id) {
+		this.Id = id;
 	}
 
 	public String getFirstName() {
@@ -53,27 +79,27 @@ public class MedicalRecord {
 		this.lastName = lastName;
 	}
 
-	public String getBirthdate() {
-		return new SimpleDateFormat("dd/MM/yyyy").format(birthdate);
+	public LocalDate getBirthdate() {
+		return birthdate;
 	}
 
-	public void setBirthDate(String birthdate) throws ParseException {
-		this.birthdate = new SimpleDateFormat("dd/MM/yyyy").parse(birthdate);
+	public void setBirthDate(LocalDate birthdate) throws ParseException {
+		this.birthdate = birthdate;
 	}
 
-	public String[] getMedications() {
+	public ArrayList<String> getMedications() {
 		return medications;
 	}
 
-	public void setMerications(String[] medications) {
+	public void setMedications(ArrayList<String> medications) {
 		this.medications = medications;
 	}
 
-	public String[] getAllergies() {
+	public ArrayList<String> getAllergies() {
 		return allergies;
 	}
 
-	public void setAllergies(String[] allergies) {
+	public void setAllergies(ArrayList<String> allergies) {
 		this.allergies = allergies;
 	}
 

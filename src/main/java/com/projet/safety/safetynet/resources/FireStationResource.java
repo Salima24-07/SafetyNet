@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.projet.safety.safetynet.domain.FireStation;
 import com.projet.safety.safetynet.services.FireStationService;
 
 @RestController
@@ -30,12 +31,9 @@ public class FireStationResource {
 	FireStationService fireStationService;
 	
 	@PostMapping("")
-	public ResponseEntity<Map<String, String>> registerFireStation(@RequestBody Map<String, Object> stationMap) {
+	public ResponseEntity<Map<String, String>> registerFireStation(@RequestBody FireStation fireStation) {
 		
-		String address = (String) stationMap.get("address");
-		String station = (String) stationMap.get("station");
-		
-		Map<String, String> map = fireStationService.createFireStation(address, station);
+		Map<String, String> map = fireStationService.createFireStation(fireStation);
 		
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
 	}

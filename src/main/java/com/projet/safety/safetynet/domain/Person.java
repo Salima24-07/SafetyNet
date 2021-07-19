@@ -1,15 +1,29 @@
 package com.projet.safety.safetynet.domain;
 
 import javax.persistence.*;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
-@Table(name="person")
+@Table(
+	name="person",
+	uniqueConstraints = {
+		@UniqueConstraint(name = "person_unique", columnNames = {"first_name", "last_name"})
+	}
+)
 public class Person {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(
+            name = "student_sequence",
+            sequenceName = "student_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = SEQUENCE,
+            generator = "student_sequence"
+    )
 	@Column(name="id")
-	private int Id;
+	private Long Id;
 	
 	@Column(name="first_name")
 	private String firstName;
@@ -32,6 +46,21 @@ public class Person {
 	@Column(name="email")
 	private String email;
 	
+	public Person() {
+	}
+	
+	public Person(Long id, String firstName, String lastName, String adress, String city, String zip, String phone,
+			String email) {
+		this.Id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.address = adress;
+		this.city = city;
+		this.zip = zip;
+		this.phone = phone;
+		this.email = email;
+	}
+	
 	public Person(String firstName, String lastName, String adress, String city, String zip, String phone,
 			String email) {
 		this.firstName = firstName;
@@ -41,6 +70,14 @@ public class Person {
 		this.zip = zip;
 		this.phone = phone;
 		this.email = email;
+	}
+	
+	public Long getId() {
+		return Id;
+	}
+	
+	public void setId(Long id) {
+		this.Id = id;
 	}
 	
 	public String getFirstName() {

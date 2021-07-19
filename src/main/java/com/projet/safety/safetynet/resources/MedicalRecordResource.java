@@ -1,5 +1,10 @@
 package com.projet.safety.safetynet.resources;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.safety.safetynet.domain.MedicalRecord;
+import com.projet.safety.safetynet.exceptions.BadRequestException;
 import com.projet.safety.safetynet.services.MedicalRecordService;
 
 @RestController
@@ -23,8 +29,20 @@ public class MedicalRecordResource {
 	MedicalRecordService medicalRecordService;
 	
 	@PostMapping("")
-	public ResponseEntity<Map<String, String>> registerMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+	public ResponseEntity<Map<String, String>> registerMedicalRecord(@RequestBody Map<String, Object> recordMap) {
 		
+		MedicalRecord medicalRecord = new MedicalRecord();
+		
+		medicalRecord.setFirstName((String) recordMap.get("firstName"));
+		medicalRecord.setLastName((String) recordMap.get("lastName"));
+		medicalRecord.setMedications((ArrayList<String>) recordMap.get("medications"));
+		medicalRecord.setAllergies((ArrayList<String>) recordMap.get("allergies"));
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		try {
+			medicalRecord.setBirthDate(LocalDate.parse((String) recordMap.get("birthdate"), formatter));
+		} catch (ParseException e) {
+			throw new BadRequestException("Birthdate format is not correct");
+		}
 		
 		Map<String, String> map = medicalRecordService.createMedicalRecord(medicalRecord);
 		
@@ -33,12 +51,22 @@ public class MedicalRecordResource {
 	}
 	
 	@PutMapping("")
-	public ResponseEntity<Map<String, String>> updateMedicalRecord(@RequestBody MedicalRecord medicalRecord) {
+	public ResponseEntity<Map<String, String>> updateMedicalRecord(@RequestBody Map<String, Object> recordMap) {
 		
-		System.out.println(medicalRecord.getFirstName());
+		MedicalRecord medicalRecord = new MedicalRecord();
+		
+		medicalRecord.setFirstName((String) recordMap.get("firstName"));
+		medicalRecord.setLastName((String) recordMap.get("lastName"));
+		medicalRecord.setMedications((ArrayList<String>) recordMap.get("medications"));
+		medicalRecord.setAllergies((ArrayList<String>) recordMap.get("allergies"));
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		try {
+			medicalRecord.setBirthDate(LocalDate.parse((String) recordMap.get("birthdate"), formatter));
+		} catch (ParseException e) {
+			throw new BadRequestException("Birthdate format is not correct");
+		}
 		
 		Map<String, String> map = medicalRecordService.updateMedicalRecord(medicalRecord);
-		
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}

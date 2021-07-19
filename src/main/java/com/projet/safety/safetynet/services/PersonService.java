@@ -18,11 +18,11 @@ public interface PersonService {
 	
 	List<String> getPhoneNumbers(String station);
 	
-	List<Map<String, Object>> getPersonInfoByName(String firstName, String lastName) throws BadRequestException;
+	Map<String,Object> getPersonInfoByName(String firstName, String lastName) throws BadRequestException;
 	
 	List<Map<String, Object>> getPersonInfoByAddress(String address) throws BadRequestException;
 	
-	List<Map<String, Object>> getChildrenByAddress(String address) throws BadRequestException;
+	List<Map<String, Object>>getChildrenByAddress(String address) throws BadRequestException;
 	
 	Map<String, Object> getStationsInfo(String[] stations) throws BadRequestException;
 

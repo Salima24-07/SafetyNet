@@ -1,29 +1,38 @@
 package com.projet.safety.safetynet.repositories;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.projet.safety.safetynet.domain.Person;
-import com.projet.safety.safetynet.exceptions.BadRequestException;
 
-public interface PersonRepository {
+@Repository
+public interface PersonRepository extends JpaRepository<Person, Long>{
 	
-	Map<String, String> create(Person person) throws BadRequestException;
 	
-	Map<String, String> update(Person person) throws BadRequestException;
+	@Query("SELECT p FROM Person p WHERE firstName = ?1 and lastName = ?2")
+	Optional<Person> getPersonByName(String firstName, String lastName);
 	
-	Map<String, String> delete(String firstName, String lastName) throws BadRequestException;
+	@Query("SELECT p.email FROM Person p WHERE city = ?1")
+	List<String> getEmailsByCity(String city);
 	
-	List<String> getEmailsByCity(String city) throws BadRequestException;
+	@Query(
+			  value = "SELECT DISTINCT PHONE FROM PERSON P "
+			  		+ "INNER JOIN FIRESTATION FS ON FS.ADDRESS = P.ADDRESS WHERE STATION = ?1", 
+			  nativeQuery = true)
+	List<String> getPhoneNumbers(String station);
 	
-	List<String> getPhoneNumbers(String station) throws BadRequestException;
+	//@Query("SELECT p FROM Person p WHERE address = ?1")
+	List<Person> getByAddress(String address);
 	
-	List<Map<String, Object>> getPersonInfoByName(String firstName, String lastName) throws BadRequestException;
+	@Query(
+			  value = "select * from person where address = ?1 and (first_name <> ?2 or last_name <> ?3)", 
+			  nativeQuery = true)
+	List<Person> getChildCompany(String address, String firstName, String lastName);
 	
-	List<Map<String, Object>> getPersonInfoByAddress(String address) throws BadRequestException;
-	
-	List<Map<String, Object>> getChildrenByAddress(String address) throws BadRequestException;
-	
-	Map<String, Object> getStationInfo(String[] stations) throws BadRequestException;
+	// Map<String, Object> getStationInfo(String[] stations) throws BadRequestException;
 
 }

@@ -3,6 +3,7 @@ package com.projet.safety.safetynet.services;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,44 +20,52 @@ public class MedicalRecordServiceImpl implements MedicalRecordService{
 
 	@Override
 	public Map<String, String> createMedicalRecord(MedicalRecord medicalRecord) throws BadRequestException {
+
+		Optional<MedicalRecord> existingMR = medicalRecordRepository.getMedicalRecordByName(medicalRecord.getFirstName(), medicalRecord.getLastName());
 		
-		Map<String, String> response = new HashMap<String, String>();
-		
-		if (medicalRecordRepository.create(medicalRecord)) {
-			response.put("message", "medicalrecord created successfully");
-		} else {
-			throw new BadRequestException("Failed to create firestation");
+		if (existingMR.isPresent()) {
+			throw new BadRequestException("A medical record for the same firstname and lastname already exists");
 		}
 		
-		return response;
+		medicalRecordRepository.save(medicalRecord);
+		Map<String,String> resultMap =new HashMap<String,String>();
+		resultMap.put("message", "Medical record created successfully");
+		
+		return resultMap;
 	}
 
 	@Override
 	public Map<String, String> updateMedicalRecord(MedicalRecord medicalRecord) throws BadRequestException {
 		
-		Map<String, String> response = new HashMap<String, String>();
+		Optional<MedicalRecord> existingMR = medicalRecordRepository.getMedicalRecordByName(medicalRecord.getFirstName(), medicalRecord.getLastName());
 		
-		if (medicalRecordRepository.update(medicalRecord)) {
-			response.put("message", "medicalrecord updated successfully");
-		} else {
-			throw new BadRequestException("Failed to update firestation");
+		if (existingMR.isEmpty()) {
+			throw new BadRequestException("No medical record with the provided informations");
 		}
+
+		medicalRecord.setId(existingMR.get().getId());
 		
-		return response;
+		medicalRecordRepository.save(medicalRecord);
+		Map<String,String> resultMap =new HashMap<String,String>();
+		resultMap.put("message", "Medical record updated successfully");
+		
+		return resultMap;
 	}
 
 	@Override
 	public Map<String, String> deleteMedicalRecord(String firstName, String lastName) throws BadRequestException {
 		
-		Map<String, String> response = new HashMap<String, String>();
+		Optional<MedicalRecord> existingMR = medicalRecordRepository.getMedicalRecordByName(firstName, lastName);
 		
-		if (medicalRecordRepository.delete(firstName, lastName)) {
-			response.put("message", "medicalrecord deleted successfully");
-		} else {
-			throw new BadRequestException("Failed to deleted firestation");
+		if (existingMR.isEmpty()) {
+			throw new BadRequestException("No medical record with the provided informations");
 		}
 		
-		return response;
+		medicalRecordRepository.delete(existingMR.get());
+		Map<String,String> resultMap =new HashMap<String,String>();
+		resultMap.put("message", "Medical record deleted successfully");
+		
+		return resultMap;
 	}
 
 }

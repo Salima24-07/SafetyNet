@@ -1,5 +1,6 @@
 package com.projet.safety.safetynet.resources;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,10 +46,10 @@ public class SafetyResource {
 	}
 	
 	@GetMapping("/personInfo")
-	public ResponseEntity<List<Map<String, Object>>> getPersonInfoByName(HttpServletRequest request,
+	public ResponseEntity<Map<String, Object>> getPersonInfoByName(HttpServletRequest request,
             @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName){
 		
-		List<Map<String, Object>> response = personService.getPersonInfoByName(firstName, lastName);
+		Map<String, Object> response = personService.getPersonInfoByName(firstName, lastName);
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -57,7 +58,9 @@ public class SafetyResource {
 	public ResponseEntity<Map<String, Object>> getPersonInfoByAddress(HttpServletRequest request,
             @RequestParam("address") String address){
 		
-		Map<String, Object> response = fireStationService.getStationByAddress(address); 
+		Map<String, Object> response = new HashMap<String, Object>();
+		
+		response.put("stations", fireStationService.getStationByAddress(address)); 
 		
 		response.put("persons", personService.getPersonInfoByAddress(address));
 		

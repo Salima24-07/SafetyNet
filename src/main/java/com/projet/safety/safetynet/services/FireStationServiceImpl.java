@@ -3,12 +3,14 @@ package com.projet.safety.safetynet.services;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.projet.safety.safetynet.domain.FireStation;
+import com.projet.safety.safetynet.domain.Person;
 import com.projet.safety.safetynet.exceptions.BadRequestException;
 import com.projet.safety.safetynet.repositories.FireStationRepository;
 
@@ -20,61 +22,70 @@ public class FireStationServiceImpl implements FireStationService{
 	FireStationRepository fireStationRepository;
 
 	@Override
-	public Map<String, String> createFireStation(String address, String station) throws BadRequestException {
+	public Map<String, String> createFireStation(FireStation fireStation) throws BadRequestException {
 		
-		FireStation fireStation = new FireStation(address, station);
+		Optional<FireStation> existingFireStation = fireStationRepository.getByStationNumberAndAddress(
+			fireStation.getStation(), fireStation.getAddress());
 		
-		Map<String, String> response = new HashMap<String, String>();
-		
-		if (fireStationRepository.create(fireStation)) {
-			response.put("message", "firestation created successfully");
-		} else {
-			throw new BadRequestException("Failed to create firestation");
+		if (existingFireStation.isPresent()) {
+			throw new BadRequestException("A firestation with the same station number and address already exists");
 		}
 		
-		return response;
+		fireStationRepository.save(fireStation);
+		Map<String,String> resultMap =new HashMap<String,String>();
+		resultMap.put("message", "FireStation created successfully");
+		
+		return resultMap;
 	}
 
 	@Override
 	public Map<String, String> updateFireStation(String address, String station) throws BadRequestException {
 		
-		FireStation fireStation = new FireStation(address, station);
+		Optional<List<FireStation>> existingFireStation = fireStationRepository.getByAddress(address);
 		
-		Map<String, String> response = new HashMap<String, String>();
-		
-		if (fireStationRepository.update(fireStation)) {
-			response.put("message", "firestation updated successfully");
-		} else {
-			throw new BadRequestException("Failed to update firestation");
+		if (existingFireStation.isEmpty()) {
+			throw new BadRequestException("No firestation with the provided informations");
 		}
 		
-		return response;
+		existingFireStation.get().forEach(fireStation -> {
+			fireStation.setStation(station);
+			fireStationRepository.save(fireStation);
+			});
+		
+		Map<String,String> resultMap =new HashMap<String,String>();
+		resultMap.put("message", "FireStation updated successfully");
+		
+		return resultMap;
 	}
 
 	@Override
 	public Map<String, String> deleteFireStation(String address) throws BadRequestException {
 		
-		Map<String, String> response = new HashMap<String, String>();
+		Optional<List<FireStation>> existingFireStation = fireStationRepository.getByAddress(address);
 		
-		if (fireStationRepository.delete(address)) {
-			response.put("message", "firestation deleted successfully");
-		} else {
-			throw new BadRequestException("Failed to delete firestation");
+		if (existingFireStation.isEmpty()) {
+			throw new BadRequestException("No firestation with the provided informations");
 		}
+
+		existingFireStation.get().forEach(fireStation -> {
+			fireStationRepository.delete(fireStation);
+			});
+		Map<String,String> resultMap =new HashMap<String,String>();
+		resultMap.put("message", "FireStation deleted successfully");
 		
-		return response;
+		return resultMap;
 	}
 
 	@Override
 	public Map<String, Object> getPersonsByStation(String station) throws BadRequestException {
-
-		return fireStationRepository.getByStationNumber(station);
+		
+		return null;
 	}
 
 	@Override
-	public Map<String, Object> getStationByAddress(String address) throws BadRequestException {
+	public List<String> getStationByAddress(String address) throws BadRequestException {
 		
-		return fireStationRepository.getStationNumberByAddress(address);
+		return fireStationRepository.getStationByAddress(address);
 	}
 
 }

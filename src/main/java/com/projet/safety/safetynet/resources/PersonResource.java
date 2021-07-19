@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.projet.safety.safetynet.domain.Person;
+import com.projet.safety.safetynet.exceptions.BadRequestException;
 import com.projet.safety.safetynet.services.PersonService;
 
 @RestController
@@ -26,8 +27,8 @@ public class PersonResource {
 	public ResponseEntity<Map<String, String>> registerPerson(@RequestBody Person person) {
 		
 		Map<String, String> map = personService.createPerson(person);
-		
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
+		
 	}
 	
 	@PutMapping("")
