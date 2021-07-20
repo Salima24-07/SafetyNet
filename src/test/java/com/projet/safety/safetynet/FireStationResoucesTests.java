@@ -23,10 +23,10 @@ class FireStationResourcesTests {
 	private MockMvc mockMvc;
 	
 	@Test
-	public void testCreateFireStation() throws Exception {
+	public void testCreateFireStationOK() throws Exception {
 		String url = "/firestation";
 		
-		FireStation fireStation = new FireStation("test", "3");
+		FireStation fireStation = new FireStation("test_create_ok", "test_create_ok");
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -39,10 +39,26 @@ class FireStationResourcesTests {
 	}
 	
 	@Test
-	public void testUpdateFireStation() throws Exception {
+	public void testCreateFireStationKO() throws Exception {
 		String url = "/firestation";
 		
-		FireStation fireStation = new FireStation("test", "3");
+		FireStation fireStation = new FireStation("test_create_ko","10");
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(fireStation);
+	    mockMvc.perform(MockMvcRequestBuilders.post(url)
+	            .content(requestJson)
+	    		.contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testUpdateFireStationOK() throws Exception {
+		String url = "/firestation";
+		
+		FireStation fireStation = new FireStation("test_update_ok","11");
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -55,10 +71,26 @@ class FireStationResourcesTests {
 	}
 	
 	@Test
-	public void testDeleteFireStation() throws Exception {
+	public void testUpdateFireStationKO() throws Exception {
 		String url = "/firestation";
 		
-		FireStation fireStation = new FireStation("test", "3");
+		FireStation fireStation = new FireStation("test_update_ko", "test_update_ko");
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(fireStation);
+	    mockMvc.perform(MockMvcRequestBuilders.put(url)
+	            .content(requestJson)
+	    		.contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testDeleteFireStationOK() throws Exception {
+		String url = "/firestation";
+		
+		FireStation fireStation = new FireStation("test_delete_ok","12");
 		
 		ObjectMapper mapper = new ObjectMapper();
 	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
@@ -68,6 +100,22 @@ class FireStationResourcesTests {
 	            .content(requestJson)
 	    		.contentType(MediaType.APPLICATION_JSON))
 	            .andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testDeleteFireStationKO() throws Exception {
+		String url = "/firestation";
+		
+		FireStation fireStation = new FireStation("test_delete_ko", "test_delete_ko");
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(fireStation);
+	    mockMvc.perform(MockMvcRequestBuilders.delete(url)
+	            .content(requestJson)
+	    		.contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isBadRequest());
 	}
 
 }

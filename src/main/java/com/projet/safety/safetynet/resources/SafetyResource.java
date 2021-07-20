@@ -76,12 +76,20 @@ public class SafetyResource {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	@GetMapping("/flood/stations")
-	public ResponseEntity<Map<String, Object>> getStationsInfo(HttpServletRequest request,
-            @RequestParam("stations") String[] stations){
+	public ResponseEntity<Map<String, List<Map<String, Object>>>> getStationsInfo(HttpServletRequest request,
+            @RequestParam("stations") List<String> stations){
 		
-		Map<String, Object> response = personService.getStationsInfo(stations);
+		Map<String, List<Map<String, Object>>> response = personService.getPersonInfoByStations(stations);
 		
 		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	
+	@GetMapping("/firestation")
+	ResponseEntity<Map<String, Object>> getByFireStation(HttpServletRequest request,
+            @RequestParam("stationNumber") String station) {
+		Map<String, Object> response_body = personService.getPersonInfoByStation(station);
+		ResponseEntity<Map<String, Object>> response = new ResponseEntity<>(response_body, HttpStatus.OK);
+		return response;
 	}
 
 }

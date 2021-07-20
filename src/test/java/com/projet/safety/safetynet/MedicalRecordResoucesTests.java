@@ -33,13 +33,13 @@ class MedicalRecordResourcesTests {
 	private MockMvc mockMvc;
 	
 	@Test
-	public void testCreateMedicalRecord() throws Exception {
+	public void testCreateMedicalRecordOK() throws Exception {
 		String url = "/medicalrecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
-		medicalRecord.put("firstName", "test");
-		medicalRecord.put("lastName", "test");
+		medicalRecord.put("firstName", "test_create_ok");
+		medicalRecord.put("lastName", "test_create_ok");
 		medicalRecord.put("birthdate", "03/06/1984");
 		medicalRecord.put("medications", new ArrayList<String>(Arrays. asList("aznol:350mg", "hydrapermazol:100mg")));
 		medicalRecord.put("allergies", new ArrayList<String>(Arrays. asList("nillacilan")));
@@ -55,13 +55,35 @@ class MedicalRecordResourcesTests {
 	}
 	
 	@Test
-	public void testUpdateMedicalRecord() throws Exception {
+	public void testCreateMedicalRecordKO() throws Exception {
 		String url = "/medicalrecord";
 		
-Map<String, Object> medicalRecord= new HashMap<String, Object>();
+		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
-		medicalRecord.put("firstName", "test");
-		medicalRecord.put("lastName", "test");
+		medicalRecord.put("firstName", "test_create_ko");
+		medicalRecord.put("lastName", "test_create_ko");
+		medicalRecord.put("birthdate", "03/06/1984");
+		medicalRecord.put("medications", new ArrayList<String>(Arrays. asList("aznol:350mg", "hydrapermazol:100mg")));
+		medicalRecord.put("allergies", new ArrayList<String>(Arrays. asList("nillacilan")));
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(medicalRecord);
+	    mockMvc.perform(MockMvcRequestBuilders.post(url)
+	            .content(requestJson)
+	    		.contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testUpdateMedicalRecordOK() throws Exception {
+		String url = "/medicalrecord";
+		
+		Map<String, Object> medicalRecord= new HashMap<String, Object>();
+		
+		medicalRecord.put("firstName", "test_update_ok");
+		medicalRecord.put("lastName", "test_update_ok");
 		medicalRecord.put("birthdate", "03/06/1984");
 		medicalRecord.put("medications", new ArrayList<String>(Arrays. asList("aznol:350mg", "hydrapermazol:100mg")));
 		medicalRecord.put("allergies", new ArrayList<String>(Arrays. asList("nillacilan")));
@@ -77,13 +99,35 @@ Map<String, Object> medicalRecord= new HashMap<String, Object>();
 	}
 	
 	@Test
-	public void testDeleteMedicalRecord() throws Exception {
+	public void testUpdateMedicalRecordKO() throws Exception {
 		String url = "/medicalrecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
-		medicalRecord.put("firstName", "test");
-		medicalRecord.put("lastName", "test");
+		medicalRecord.put("firstName", "test_update_ko");
+		medicalRecord.put("lastName", "test_update_ko");
+		medicalRecord.put("birthdate", "03/06/1984");
+		medicalRecord.put("medications", new ArrayList<String>(Arrays. asList("aznol:350mg", "hydrapermazol:100mg")));
+		medicalRecord.put("allergies", new ArrayList<String>(Arrays. asList("nillacilan")));
+		
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(medicalRecord);
+	    mockMvc.perform(MockMvcRequestBuilders.put(url)
+	            .content(requestJson)
+	    		.contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void testDeleteMedicalRecordOK() throws Exception {
+		String url = "/medicalrecord";
+		
+		Map<String, Object> medicalRecord= new HashMap<String, Object>();
+		
+		medicalRecord.put("firstName", "test_delete_ok");
+		medicalRecord.put("lastName", "test_delete_ok");
 		medicalRecord.put("birthdate", "03/06/1984");
 		medicalRecord.put("medications", new ArrayList<String>(Arrays. asList("aznol:350mg", "hydrapermazol:100mg")));
 		medicalRecord.put("allergies", new ArrayList<String>(Arrays. asList("nillacilan")));
@@ -95,6 +139,27 @@ Map<String, Object> medicalRecord= new HashMap<String, Object>();
 	            .content(requestJson)
 	    		.contentType(MediaType.APPLICATION_JSON))
 	            .andExpect(status().isOk());
+	}
+	
+	@Test
+	public void testDeleteMedicalRecordKO() throws Exception {
+		String url = "/medicalrecord";
+		
+		Map<String, Object> medicalRecord= new HashMap<String, Object>();
+		
+		medicalRecord.put("firstName", "test_delete_ko");
+		medicalRecord.put("lastName", "test_delete_ko");
+		medicalRecord.put("birthdate", "03/06/1984");
+		medicalRecord.put("medications", new ArrayList<String>(Arrays. asList("aznol:350mg", "hydrapermazol:100mg")));
+		medicalRecord.put("allergies", new ArrayList<String>(Arrays. asList("nillacilan")));
+		ObjectMapper mapper = new ObjectMapper();
+	    mapper.configure(SerializationFeature.WRAP_ROOT_VALUE, false);
+	    ObjectWriter ow = mapper.writer().withDefaultPrettyPrinter();
+	    String requestJson=ow.writeValueAsString(medicalRecord);
+	    mockMvc.perform(MockMvcRequestBuilders.delete(url)
+	            .content(requestJson)
+	    		.contentType(MediaType.APPLICATION_JSON))
+	            .andExpect(status().isBadRequest());
 	}
 
 }

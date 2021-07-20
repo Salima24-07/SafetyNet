@@ -12,9 +12,7 @@ public interface FireStationService {
 	
 	Map<String, String> updateFireStation(String address, String station) throws BadRequestException;
 	
-	Map<String, String> deleteFireStation(String address) throws BadRequestException;
-	
-	Map<String, Object> getPersonsByStation(String station) throws BadRequestException;
+	Map<String, String> deleteFireStation(String address, String station) throws BadRequestException;
 	
 	List<String> getStationByAddress(String address) throws BadRequestException;
 

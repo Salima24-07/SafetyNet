@@ -21,6 +21,9 @@ public interface FireStationRepository  extends JpaRepository<FireStation, Long>
 	@Query("SELECT fs FROM FireStation fs WHERE address = ?1")
 	Optional<List<FireStation>> getByAddress(String address);
 	
+	@Query("SELECT fs FROM FireStation fs WHERE address = ?1 or station = ?2")
+	Optional<List<FireStation>> getByAddressOrStation(String address, String station);
+	
 	@Query("SELECT fs.station FROM FireStation fs WHERE address = ?1")
 	List<String> getStationByAddress(String address);
 

@@ -24,6 +24,8 @@ public interface PersonService {
 	
 	List<Map<String, Object>>getChildrenByAddress(String address) throws BadRequestException;
 	
-	Map<String, Object> getStationsInfo(String[] stations) throws BadRequestException;
+	Map<String, List<Map<String, Object>>> getPersonInfoByStations(List<String> stations) throws BadRequestException;
+	
+	Map<String, Object> getPersonInfoByStation(String station) throws BadRequestException;
 
 }

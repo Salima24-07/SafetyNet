@@ -169,9 +169,73 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Map<String, Object> getStationsInfo(String[] stations) throws BadRequestException {
+	public Map<String, List<Map<String, Object>>> getPersonInfoByStations(List<String> stations) throws BadRequestException {
 		
-		return null; //personRepository.getStationInfo(stations);
+		List<Person> persons = personRepository.getPersonInfoByStations(stations);
+		
+		Map<String, List<Map<String, Object>>> result = new HashMap<String, List<Map<String, Object>>>();
+		
+		persons.forEach(person -> {
+			Optional<MedicalRecord> existingMR = medicalRecordRepository.getMedicalRecordByName(person.getFirstName(), person.getLastName());
+			
+			MedicalRecord mr = existingMR.get();
+			
+			Map<String,Object> resultMap =new HashMap<String,Object>();
+			
+			resultMap.put("firstName", person.getFirstName());
+			resultMap.put("lastName", person.getLastName());
+			resultMap.put("phone", person.getPhone());
+			resultMap.put("medications", mr.getMedications());
+			resultMap.put("allergies", mr.getAllergies());
+			resultMap.put("age", Period.between(mr.getBirthdate(), LocalDate.now()).getYears());
+			
+			if (result.containsKey(person.getAddress())) {
+				result.get(person.getAddress()).add(resultMap);
+			} else {
+				List<Map<String, Object>> personsList = new ArrayList<Map<String, Object>>();
+				personsList.add(resultMap);
+				result.put(person.getAddress(), personsList);
+			}
+		});
+		
+		return result;
+	}
+
+	@Override
+	public Map<String, Object> getPersonInfoByStation(String station) throws BadRequestException {
+		
+		List<Person> persons = personRepository.getPersonInfoByStation(station);
+		
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("adults", 0);
+		result.put("children", 0);
+		
+		List<Map<String, Object>> personsMap = new ArrayList<Map<String, Object>>();
+		
+		persons.forEach(person -> {
+			Optional<MedicalRecord> existingMR = medicalRecordRepository.getMedicalRecordByName(person.getFirstName(), person.getLastName());
+			
+			MedicalRecord mr = existingMR.get();
+			
+			Map<String,Object> resultMap =new HashMap<String,Object>();
+			
+			resultMap.put("firstName", person.getFirstName());
+			resultMap.put("lastName", person.getLastName());
+			resultMap.put("phone", person.getPhone());
+			resultMap.put("address",person.getAddress());
+			if (Period.between(mr.getBirthdate(), LocalDate.now()).getYears() > 18) {
+				result.replace("adults", (Integer) result.get("adults") + 1);
+			} else {
+				result.replace("children", (Integer) result.get("children") + 1);
+			}
+			
+			personsMap.add(resultMap);
+		});
+		
+		result.put("persons", personsMap);
+		
+		return result;
+		
 	}
 
 }

@@ -33,6 +33,16 @@ public interface PersonRepository extends JpaRepository<Person, Long>{
 			  nativeQuery = true)
 	List<Person> getChildCompany(String address, String firstName, String lastName);
 	
-	// Map<String, Object> getStationInfo(String[] stations) throws BadRequestException;
+	@Query(
+			  value = "SELECT p.* FROM PERSON P "
+			  		+ "INNER JOIN FIRESTATION FS ON FS.ADDRESS = P.ADDRESS WHERE STATION = ?1", 
+			  nativeQuery = true)
+	List<Person> getPersonInfoByStation(String station);
+	
+	@Query(
+			  value = "SELECT p.* FROM PERSON P "
+			  		+ "INNER JOIN FIRESTATION FS ON FS.ADDRESS = P.ADDRESS WHERE STATION in (?1)", 
+			  nativeQuery = true)
+	List<Person> getPersonInfoByStations(List<String> stations);
 
 }

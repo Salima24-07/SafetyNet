@@ -1,6 +1,5 @@
 package com.projet.safety.safetynet.services;
 
-import java.util.Date;
 import java.util.Map;
 
 import com.projet.safety.safetynet.domain.MedicalRecord;

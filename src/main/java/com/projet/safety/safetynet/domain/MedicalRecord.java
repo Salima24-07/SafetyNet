@@ -5,7 +5,10 @@ import javax.persistence.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(
@@ -31,10 +34,10 @@ public class MedicalRecord {
 	private LocalDate birthdate;
 
 	@Column(name="medications")
-	private ArrayList<String> medications;
+	private String[] medications;
 
 	@Column(name="allergies")
-	private ArrayList<String> allergies;
+	private String[] allergies;
 
 	public MedicalRecord() {}
 	
@@ -43,16 +46,16 @@ public class MedicalRecord {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = birthdate;
-		this.medications = medications;
-		this.allergies = allergies;
+		this.medications = medications.toArray(new String[0]);
+		this.allergies = allergies.toArray(new String[0]);
 	}
 	
 	public MedicalRecord(String firstName, String lastName, LocalDate birthdate, ArrayList<String> medications, ArrayList<String> allergies) throws ParseException {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.birthdate = birthdate;
-		this.medications = medications;
-		this.allergies = allergies;
+		this.medications = medications.toArray(new String[0]);
+		this.allergies = allergies.toArray(new String[0]);
 	}
 
 	public Long getId() {
@@ -88,19 +91,23 @@ public class MedicalRecord {
 	}
 
 	public ArrayList<String> getMedications() {
-		return medications;
+		ArrayList<String> medicationsList = new ArrayList<String>();
+	    Collections.addAll(medicationsList, medications);
+	    return medicationsList;
 	}
 
 	public void setMedications(ArrayList<String> medications) {
-		this.medications = medications;
+		this.medications = medications.toArray(new String[0]);
 	}
 
 	public ArrayList<String> getAllergies() {
-		return allergies;
+		ArrayList<String> allergiesList = new ArrayList<String>();
+	    Collections.addAll(allergiesList, allergies);
+	    return allergiesList;
 	}
 
 	public void setAllergies(ArrayList<String> allergies) {
-		this.allergies = allergies;
+		this.allergies = allergies.toArray(new String[0]);
 	}
 
 }

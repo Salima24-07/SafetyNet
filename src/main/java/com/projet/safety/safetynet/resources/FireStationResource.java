@@ -52,21 +52,12 @@ public class FireStationResource {
 	@DeleteMapping("")
 	ResponseEntity<Map<String, String>> deleteFireStation(@RequestBody Map<String, Object> stationMap) {
 		
-		String address = (String) stationMap.get("address");
+		String address = (String) stationMap.getOrDefault("address", "");
+		String station = (String) stationMap.getOrDefault("station", "");
 		
-		Map<String, String> map = fireStationService.deleteFireStation(address);
+		Map<String, String> map = fireStationService.deleteFireStation(address, station);
 		
 		return new ResponseEntity<>(map, HttpStatus.OK);
-	}
-	
-	@GetMapping("")
-	ResponseEntity<Map<String, Object>> getByFireStation(HttpServletRequest request,
-            @RequestParam("stationNumber") String station) {
-		logger.info(request.getRequestURI());
-		Map<String, Object> response_body = fireStationService.getPersonsByStation(station);
-		ResponseEntity<Map<String, Object>> response = new ResponseEntity<>(response_body, HttpStatus.OK);
-		logger.info(response);
-		return response;
 	}
 
 }

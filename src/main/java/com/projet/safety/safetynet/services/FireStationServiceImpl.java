@@ -43,7 +43,7 @@ public class FireStationServiceImpl implements FireStationService{
 		
 		Optional<List<FireStation>> existingFireStation = fireStationRepository.getByAddress(address);
 		
-		if (existingFireStation.isEmpty()) {
+		if (existingFireStation.get().size() == 0) {
 			throw new BadRequestException("No firestation with the provided informations");
 		}
 		
@@ -59,11 +59,11 @@ public class FireStationServiceImpl implements FireStationService{
 	}
 
 	@Override
-	public Map<String, String> deleteFireStation(String address) throws BadRequestException {
+	public Map<String, String> deleteFireStation(String address, String station) throws BadRequestException {
 		
-		Optional<List<FireStation>> existingFireStation = fireStationRepository.getByAddress(address);
+		Optional<List<FireStation>> existingFireStation = fireStationRepository.getByAddressOrStation(address, station);
 		
-		if (existingFireStation.isEmpty()) {
+		if (existingFireStation.get().size() == 0) {
 			throw new BadRequestException("No firestation with the provided informations");
 		}
 
@@ -74,12 +74,6 @@ public class FireStationServiceImpl implements FireStationService{
 		resultMap.put("message", "FireStation deleted successfully");
 		
 		return resultMap;
-	}
-
-	@Override
-	public Map<String, Object> getPersonsByStation(String station) throws BadRequestException {
-		
-		return null;
 	}
 
 	@Override
