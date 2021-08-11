@@ -37,7 +37,7 @@ public class MedicalRecordResource {
 		medicalRecord.setLastName((String) recordMap.get("lastName"));
 		medicalRecord.setMedications((ArrayList<String>) recordMap.get("medications"));
 		medicalRecord.setAllergies((ArrayList<String>) recordMap.get("allergies"));
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 		try {
 			medicalRecord.setBirthDate(LocalDate.parse((String) recordMap.get("birthdate"), formatter));
 		} catch (ParseException e) {
