@@ -1,4 +1,4 @@
-package com.projet.safety.safetynet.resources;
+package com.projet.safety.safetynet.controllers;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +22,7 @@ import com.projet.safety.safetynet.exceptions.BadRequestException;
 import com.projet.safety.safetynet.services.MedicalRecordService;
 
 @RestController
-@RequestMapping("/medicalrecord")
+@RequestMapping("/medicalRecord")
 public class MedicalRecordResource {
 	
 	@Autowired

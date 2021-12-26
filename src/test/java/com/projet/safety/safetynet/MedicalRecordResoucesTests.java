@@ -34,7 +34,7 @@ class MedicalRecordResourcesTests {
 	
 	@Test
 	public void testCreateMedicalRecordOK() throws Exception {
-		String url = "/medicalrecord";
+		String url = "/medicalRecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
@@ -56,7 +56,7 @@ class MedicalRecordResourcesTests {
 	
 	@Test
 	public void testCreateMedicalRecordKO() throws Exception {
-		String url = "/medicalrecord";
+		String url = "/medicalRecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
@@ -78,7 +78,7 @@ class MedicalRecordResourcesTests {
 	
 	@Test
 	public void testUpdateMedicalRecordOK() throws Exception {
-		String url = "/medicalrecord";
+		String url = "/medicalRecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
@@ -100,7 +100,7 @@ class MedicalRecordResourcesTests {
 	
 	@Test
 	public void testUpdateMedicalRecordKO() throws Exception {
-		String url = "/medicalrecord";
+		String url = "/medicalRecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
@@ -122,7 +122,7 @@ class MedicalRecordResourcesTests {
 	
 	@Test
 	public void testDeleteMedicalRecordOK() throws Exception {
-		String url = "/medicalrecord";
+		String url = "/medicalRecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		
@@ -143,7 +143,7 @@ class MedicalRecordResourcesTests {
 	
 	@Test
 	public void testDeleteMedicalRecordKO() throws Exception {
-		String url = "/medicalrecord";
+		String url = "/medicalRecord";
 		
 		Map<String, Object> medicalRecord= new HashMap<String, Object>();
 		

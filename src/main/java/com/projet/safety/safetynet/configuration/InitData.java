@@ -1,4 +1,4 @@
-package com.projet.safety.safetynet.resources;
+package com.projet.safety.safetynet.configuration;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +27,7 @@ import com.projet.safety.safetynet.repositories.FireStationRepository;
 import com.projet.safety.safetynet.repositories.MedicalRecordRepository;
 import com.projet.safety.safetynet.repositories.PersonRepository;
 
-@RestController
-@RequestMapping("/init")
+@Configuration 
 public class InitData {
 	
 	@Autowired
@@ -38,10 +39,11 @@ public class InitData {
 	@Autowired
 	MedicalRecordRepository mrRepo;
 	
-	@GetMapping("")
-	public Map<String, List<Map<String, Object>>> init() throws IOException {
+	@Bean 
+	public void init() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		TypeReference<Map<String, List<Map<String, Object>>>> typeReference = new TypeReference<Map<String, List<Map<String, Object>>>>(){};
+		TypeReference<Map<String, List<Map<String, Object>>>> typeReference = new TypeReference<Map<String, 
+				                                                                  List<Map<String, Object>>>>(){};
 		InputStream inputStream = new ClassPathResource(
 			      "data.json").getInputStream();
 		try {
@@ -85,11 +87,8 @@ public class InitData {
 					System.err.println("error while creating medicalRecord for person " + (String) medicalrecord.get("firstName") + " " + (String) medicalrecord.get("lastName"));
 				}
 			});
-			
-			return data;
 		} catch (IOException e){
 			System.out.println(e);
-			return null;
 		}
 		
 	}

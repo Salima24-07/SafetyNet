@@ -15,8 +15,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.projet.safety.safetynet.controllers.PersonResource;
 import com.projet.safety.safetynet.domain.Person;
-import com.projet.safety.safetynet.resources.PersonResource;
 import com.projet.safety.safetynet.services.PersonService;
 
 import static org.junit.jupiter.api.Assertions.*;

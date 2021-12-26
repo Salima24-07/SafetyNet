@@ -1,4 +1,4 @@
-package com.projet.safety.safetynet.resources;
+package com.projet.safety.safetynet.controllers;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +19,7 @@ import com.projet.safety.safetynet.services.PersonService;
 
 @RestController
 @RequestMapping("")
-public class SafetyResource {
+public class SafetyUrlsResource {
 	
 	@Autowired
 	PersonService personService;

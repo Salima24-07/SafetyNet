@@ -99,7 +99,7 @@ public class PersonServiceImpl implements PersonService {
 		Optional<MedicalRecord> existingMR = medicalRecordRepository.getMedicalRecordByName(firstName, lastName);
 		
 		if (existingPerson.isEmpty() || existingMR.isEmpty()) {
-			throw new BadRequestException("A person with the same firstname and lastname already exists");
+			throw new BadRequestException("No person or medicalReaord with provided informations ");
 		}
 		
 		Person person = existingPerson.get();

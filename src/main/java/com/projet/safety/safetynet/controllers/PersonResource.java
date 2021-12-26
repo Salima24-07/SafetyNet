@@ -1,4 +1,4 @@
-package com.projet.safety.safetynet.resources;
+package com.projet.safety.safetynet.controllers;
 
 import java.util.Map;
 
@@ -16,7 +16,7 @@ import com.projet.safety.safetynet.domain.Person;
 import com.projet.safety.safetynet.exceptions.BadRequestException;
 import com.projet.safety.safetynet.services.PersonService;
 
-@RestController
+@RestController 
 @RequestMapping("/person")
 public class PersonResource {
 	
@@ -24,7 +24,7 @@ public class PersonResource {
 	PersonService personService;
 	
 	@PostMapping("")
-	public ResponseEntity<Map<String, String>> registerPerson(@RequestBody Person person) {
+	public ResponseEntity<Map<String, String>> createPerson(@RequestBody Person person) {
 		
 		Map<String, String> map = personService.createPerson(person);
 		return new ResponseEntity<>(map, HttpStatus.CREATED);
@@ -40,7 +40,7 @@ public class PersonResource {
 	} 
 	
 	@DeleteMapping("")
-	ResponseEntity<Map<String, String>> deletePerson(@RequestBody Map<String, Object> personMap) {
+	ResponseEntity<Map<String, String>> deletePerson(@RequestBody Map<String, String> personMap) {
 		
 		String firstName = (String) personMap.get("firstName");
 		String lastName = (String) personMap.get("lastName");
